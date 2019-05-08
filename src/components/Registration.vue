@@ -18,13 +18,7 @@ export default {
   },
   methods: {
     registerUser(user) {
-      const date = new Date();
-      user.registered = true;
-      this.$store.state.registrations.push({
-        userId: user.id,
-        name: user.name,
-        date: date.getMonth() + "/" + date.getDay()
-      });
+      this.$store.dispatch("register", user.id);
     }
   }
 };
@@ -39,14 +33,12 @@ export default {
   width: 300px;
   vertical-align: top;
 }
-
 .row h4 {
   display: inline-block;
   width: 70%;
   text-align: left;
   margin: 0 0 10px 0;
 }
-
 button {
   background-color: lightgreen;
   border: none;
@@ -55,7 +47,6 @@ button {
   text-align: right;
   cursor: pointer;
 }
-
 button:hover {
   background-color: green;
 }

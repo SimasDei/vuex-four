@@ -3,7 +3,7 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
-const store = new Vuex.Store({
+export const store = new Vuex.Store({
   state: {
     registrations: [],
     users: [
@@ -22,7 +22,40 @@ const store = new Vuex.Store({
     registrations(state) {
       return state.registrations;
     },
+    totalRegistrations(state) {
+      return state.registrations.length;
+    },
+  },
+  mutations: {
+    register(state, userId) {
+      const date = new Date();
+      const user = state.users.find(user => {
+        return user.id == userId;
+      });
+      user.registered = true;
+      const registration = {
+        userId: userId,
+        name: user.name,
+        date: date.getMonth() + '/' + date.getDay(),
+      };
+      state.registrations.push(registration);
+    },
+    unregister(state, payload) {
+      const user = state.users.find(user => {
+        return user.id == payload.userId;
+      });
+      user.registered = false;
+      const registration = state.registrations.find(registration => {
+        return registration.userId == payload.userId;
+      });
+      state.registrations.splice(state.registrations.indexOf(registration), 1);
+    },
+  },
+  actions: {
+    register({ commit }, userId) {
+      setTimeout(() => {
+        commit('register', userId);
+      }, 1000);
+    },
   },
 });
-
-export default store;
