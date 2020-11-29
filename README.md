@@ -1,4 +1,4 @@
-# vuex-basics
+## vuex-basics
 
 > A Vue.js project
 
